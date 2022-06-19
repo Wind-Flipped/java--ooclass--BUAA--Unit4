@@ -5,10 +5,12 @@ public class MyAssociation {
     private MyClass class2;
     private String name1;
     private String name2;
+    private int num;
 
     public MyAssociation(String id, String name) {
         this.id = id;
         this.name = name;
+        num = 0;
         class1 = null;
         class2 = null;
         name1 = null;
@@ -16,13 +18,14 @@ public class MyAssociation {
     }
 
     public void addAssociationEnd(MyClass myClass, String name) {
-        if (class1 != null) {
+        if (num > 0) {
             class2 = myClass;
             name2 = name;
         } else {
             class1 = myClass;
             name1 = name;
         }
+        num++;
     }
 
     public void applyAssociation() {

@@ -49,6 +49,10 @@ public class MyTransition {
         }
     }
 
+    public String getGuard() {
+        return guard;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

@@ -1,7 +1,9 @@
 import com.oocourse.uml3.interact.exceptions.user.TransitionNotFoundException;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MyState {
     private final String id;
@@ -9,7 +11,7 @@ public class MyState {
     private final boolean isFinal;
     private final List<MyTransition> transitions;
 
-    public MyState(String id, String name,boolean isFinal) {
+    public MyState(String id, String name, boolean isFinal) {
         this.id = id;
         this.name = name;
         this.isFinal = isFinal;
@@ -39,7 +41,7 @@ public class MyState {
             }
         }
         if (names.isEmpty()) {
-            throw new TransitionNotFoundException(s,name,target.getName());
+            throw new TransitionNotFoundException(s, name, target.getName());
         }
         return names;
     }
@@ -68,10 +70,24 @@ public class MyState {
         while (!newTransitions.isEmpty()) {
             MyTransition oneTransition = newTransitions.get(0);
             newTransitions.remove(0);
-            if (newTransitions.contains(oneTransition)) {
-                return false;
+            Set<String> eventsName1 = new HashSet<>(oneTransition.getEventsName());
+            for (MyTransition theTransition : newTransitions) {
+                Set<String> eventsName2 = new HashSet<>(theTransition.getEventsName());
+                if (eventsName1.containsAll(eventsName2) && eventsName2.containsAll(eventsName1)) {
+                    if (isBlankString(oneTransition.getGuard()) ||
+                            isBlankString(theTransition.getGuard())) {
+                        return false;
+                    }
+                    if (oneTransition.getGuard().equals(theTransition.getGuard())) {
+                        return false;
+                    }
+                }
             }
         }
         return true;
+    }
+
+    private boolean isBlankString(String string) {
+        return string == null || string.trim().isEmpty();
     }
 }

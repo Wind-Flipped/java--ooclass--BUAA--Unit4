@@ -256,7 +256,7 @@ public class MyClass {
                         return null;
                     }
                 });
-            }
+            } else { return null; }
             if (theClass.getId().equals(id)) {
                 if (!cycleId.isEmpty()) {
                     CYCLE_ID.addAll(cycleId);

@@ -73,14 +73,10 @@ public class MyState {
             Set<String> eventsName1 = new HashSet<>(oneTransition.getEventsName());
             for (MyTransition theTransition : newTransitions) {
                 Set<String> eventsName2 = new HashSet<>(theTransition.getEventsName());
-                if (eventsName1.containsAll(eventsName2) && eventsName2.containsAll(eventsName1)) {
-                    if (isBlankString(oneTransition.getGuard()) ||
-                            isBlankString(theTransition.getGuard())) {
-                        return false;
-                    }
-                    if (oneTransition.getGuard().equals(theTransition.getGuard())) {
-                        return false;
-                    }
+                for (String eventName : eventsName1) { if (eventsName2.contains(eventName))
+                    { if (isBlankString(oneTransition.getGuard()) || isBlankString(
+                            theTransition.getGuard()) || oneTransition.getGuard().equals(
+                                    theTransition.getGuard())) { return false; } }
                 }
             }
         }
